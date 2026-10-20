@@ -898,6 +898,93 @@
     #field { display: none; }
     .bats, .ghost { display: none; }
   }
+
+  /* ---------- новость про канал: полоса над шапкой (20.10.2026) ---------- */
+  .news {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 11; height: 42px;
+    display: flex; align-items: center; justify-content: center; padding: 0 46px 0 12px;
+    background: linear-gradient(90deg, rgba(255, 106, 0, .14), rgba(255, 106, 0, .3) 50%, rgba(255, 106, 0, .14)), #0b0908;
+    border-bottom: 1px solid rgba(255, 106, 0, .38); font-size: 13px; color: var(--ink);
+  }
+  .news[hidden] { display: none; }
+  .news-in { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .news-tag { flex: none; font: 500 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #000; background: var(--purple, var(--or)); padding: 5px 8px; border-radius: 99px; }
+  .news-txt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .news-txt b { font-weight: 600; }
+  .news-go { flex: none; display: inline-flex; align-items: center; gap: 5px; color: var(--or-soft); font-weight: 600; }
+  .news svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s; }
+  .news-in:hover .news-go svg { transform: translateX(3px); }
+  .news-x { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: var(--mute); }
+  .news-x:hover { color: var(--ink); }
+  body.has-news header { top: 42px; }
+  .news .short { display: none; }
+  @media (max-width: 560px) { .news .long, .news-tag { display: none; } .news .short { display: inline; } }
+
+  /* ---------- оценка и отзыв (20.10.2026) ---------- */
+  .rate {
+    margin-top: 14px; padding: clamp(26px, 5vw, 36px) clamp(18px, 4vw, 34px); text-align: center; scroll-margin: 120px;
+    border-color: rgba(255, 106, 0, .34); background: radial-gradient(90% 70% at 50% 0%, rgba(255, 106, 0, .13), transparent 70%), var(--panel);
+  }
+  .rate.flash { animation: rate-flash 1.6s ease; }
+  @keyframes rate-flash { 30% { box-shadow: 0 0 0 2px var(--or), 0 0 60px var(--or-glow); } }
+  .rate > div { display: none; }
+  .rate[data-s="ask"] .rate-ask, .rate[data-s="good"] .rate-good, .rate[data-s="bad"] .rate-bad, .rate[data-s="done"] .rate-done { display: block; animation: rate-in .6s cubic-bezier(.16, 1, .3, 1); }
+  @keyframes rate-in { from { opacity: 0; transform: translateY(10px); } }
+  .rate-k { font: 400 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--or-soft); margin-bottom: 12px; }
+  .rate h3 { font: 500 clamp(20px, 4.6vw, 25px)/1.2 var(--display); margin-bottom: 10px; }
+  .rate p { color: var(--mute); font-size: 14.5px; max-width: 48ch; margin: 0 auto; }
+  .stars { display: inline-flex; gap: 4px; margin-top: 20px; }
+  .star { width: 54px; height: 54px; display: grid; place-items: center; border-radius: 14px; transition: transform .2s; touch-action: manipulation; }
+  .star svg { width: 42px; height: 42px; fill: rgba(255, 106, 0, .07); stroke: rgba(255, 154, 77, .55); stroke-width: 1.4; stroke-linejoin: round; transition: fill .2s, stroke .2s, filter .2s; }
+  .star.on svg { fill: var(--or); stroke: var(--or); filter: drop-shadow(0 0 10px var(--or-glow)); }
+  @media (hover: hover) { .star:hover { transform: translateY(-2px) scale(1.06); } }
+  /* пустые звёзды раз в несколько секунд «пробегает» свечение — приглашение нажать */
+  .rate[data-s="ask"] .star:not(.on) svg, .rsheet .star:not(.on) svg { animation: star-hint 3.4s ease-in-out infinite; }
+  .star:nth-child(2) svg { animation-delay: .12s; } .star:nth-child(3) svg { animation-delay: .24s; } .star:nth-child(4) svg { animation-delay: .36s; } .star:nth-child(5) svg { animation-delay: .48s; }
+  @keyframes star-hint { 0%, 72%, 100% { stroke: rgba(255, 154, 77, .55); } 82% { stroke: var(--or); fill: rgba(255, 106, 0, .22); } }
+  .star.pop { animation: star-pop .5s cubic-bezier(.16, 1, .3, 1) both; }
+  @keyframes star-pop { 40% { transform: scale(1.32); } }
+  .stars-hint { font-size: 12px; color: var(--faint); margin-top: 8px; }
+  .rate-steps { list-style: none; text-align: left; max-width: 540px; margin: 24px auto 0; display: grid; gap: 16px; counter-reset: rs; }
+  .rate-steps li { position: relative; padding-left: 42px; font-size: 14.5px; color: var(--mute); counter-increment: rs; }
+  .rate-steps li::before {
+    content: counter(rs); position: absolute; left: 0; top: -3px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+    font: 500 12px/1 var(--mono); color: var(--or-soft); border: 1px solid rgba(255, 106, 0, .45); background: rgba(255, 106, 0, .08);
+  }
+  .rate-steps b { color: var(--ink); font-weight: 600; }
+  .tpl-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 8px; }
+  .tpl-tabs button { font-size: 12.5px; padding: 7px 12px; border-radius: 99px; border: 1px solid var(--line); color: var(--mute); transition: .2s; }
+  .tpl-tabs button.on { color: var(--ink); border-color: var(--or); background: rgba(255, 106, 0, .12); }
+  .tpl {
+    display: block; width: 100%; min-height: 86px; resize: vertical; font: 400 14px/1.5 var(--body); color: var(--ink);
+    background: rgba(0, 0, 0, .35); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px;
+  }
+  .tpl:focus { outline: none; border-color: var(--or); }
+  .rate .btns { margin-top: 24px; }
+  .rate-note { display: block; font-size: 12px; color: var(--faint); margin-top: 10px; }
+  .rate-link { margin-top: 16px; font-size: 13px; color: var(--mute); text-decoration: underline; text-underline-offset: 3px; }
+  .rate-link:hover { color: var(--ink); }
+  .ok-ico { width: 58px; height: 58px; margin: 0 auto 16px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 106, 0, .14); border: 1px solid rgba(255, 106, 0, .42); }
+  .ok-ico svg { width: 26px; height: 26px; fill: none; stroke: var(--or); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  /* плашка «Оцените нас» при повторном заходе */
+  .rsheet {
+    position: fixed; left: 50%; bottom: 16px; z-index: 24; width: min(460px, calc(100vw - 24px)); transform: translate(-50%, 150%);
+    display: grid; gap: 4px; padding: 16px 50px 16px 18px; border-radius: 20px; border: 1px solid rgba(255, 106, 0, .45);
+    background: linear-gradient(180deg, rgba(255, 106, 0, .15), rgba(16, 15, 14, .97) 70%), #100f0e;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .65), 0 0 40px rgba(255, 106, 0, .16); transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+  }
+  .rsheet[hidden] { display: none; }
+  .rsheet.on { transform: translate(-50%, 0); }
+  .rsheet b { font: 500 15px/1.3 var(--display); }
+  .rsheet span { font-size: 13px; color: var(--mute); }
+  .rsheet .stars { margin-top: 6px; gap: 2px; }
+  .rsheet .star { width: 44px; height: 44px; }
+  .rsheet .star svg { width: 34px; height: 34px; }
+  .rsheet .btn { min-height: 44px; margin-top: 10px; justify-self: start; }
+  .rsheet[data-v="ask"] .btn, .rsheet[data-v="go"] .stars { display: none; }
+  .rsheet-x { position: absolute; right: 8px; top: 8px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--mute); }
+  .rsheet-x svg, .news-x svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+  @media (prefers-reduced-motion: reduce) { .star.pop, .rate.flash, .star svg { animation: none !important; } }
 </style>
 </head>
 <body class="gated loading">
@@ -975,6 +1062,16 @@
 
 <canvas id="field" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
+
+<!-- Новость: Telegram-канал (20.10.2026). Скрыли или перешли — не показываем 7 дней -->
+<div class="news" id="news" hidden>
+  <a class="news-in" id="news-go" data-link="channel" href="#" target="_blank" rel="noopener">
+    <span class="news-tag">Новое</span>
+    <span class="news-txt"><span class="long"><b>Наш Telegram-канал:</b> новости и розыгрыши — всегда вовремя</span><span class="short"><b>Канал:</b> новости и розыгрыши</span></span>
+    <span class="news-go">Подписаться<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </a>
+  <button class="news-x" id="news-x" type="button" aria-label="Скрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
 
 <header>
   <a class="logo" href="#top">PLUS<b>HUB</b></a>
@@ -1092,6 +1189,46 @@
         </div>
       </div>
     </div>
+
+    <!-- Оценка и отзыв (20.10.2026): звёзды на сайте → 4–5: подсказка и готовый текст для GGSEL, 1–3: сначала поддержка (кнопка отзыва остаётся) -->
+    <div class="card rate reveal" id="rate" data-s="ask">
+      <div class="rate-ask">
+        <div class="rate-k">Пара секунд</div>
+        <h3>Как вам выдача?</h3>
+        <p>Оцените PLUSHUB — ваша оценка помогает другим покупателям найти честного продавца.</p>
+        <div class="stars" data-stars></div>
+        <div class="stars-hint">Нажмите на звезду</div>
+      </div>
+      <div class="rate-good">
+        <div class="rate-k">Спасибо за оценку</div>
+        <h3>Поделитесь ею на GGSEL — это 30 секунд</h3>
+        <p>Отзывы на GGSEL видят все покупатели. Для небольшого магазина каждый отзыв очень много значит.</p>
+        <ol class="rate-steps">
+          <li><b>Выберите готовый текст</b> или напишите свой
+            <div class="tpl-tabs" id="tpl-tabs"></div>
+            <textarea class="tpl" id="tpl" rows="3" aria-label="Текст отзыва"></textarea></li>
+          <li><b>Откройте заказ <span data-f="order"></span></b> в «Моих покупках» на GGSEL</li>
+          <li><b>Внизу страницы заказа</b> поставьте оценку и вставьте текст</li>
+        </ol>
+        <div class="btns"><a class="btn pri" id="rate-go" data-link="review" href="#" target="_blank" rel="noopener">Скопировать и открыть GGSEL</a></div>
+        <small class="rate-note">Текст скопируется сам — останется только вставить</small>
+      </div>
+      <div class="rate-bad">
+        <div class="rate-k">Нам жаль</div>
+        <h3>Расскажите, что пошло не так</h3>
+        <p>Напишите в поддержку — разберёмся и исправим. Отвечаем лично.</p>
+        <div class="btns">
+          <a class="btn pri" id="rate-help" data-link="support" href="#" target="_blank" rel="noopener">Написать в поддержку</a>
+          <a class="btn" id="rate-anyway" data-link="review" href="#" target="_blank" rel="noopener">Оставить отзыв на GGSEL</a>
+        </div>
+      </div>
+      <div class="rate-done">
+        <div class="ok-ico"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <h3>Спасибо, что поддержали PLUSHUB</h3>
+        <p>Отзыв оставляется внизу страницы заказа в «Моих покупках». Если что-то не получилось — напишите в поддержку.</p>
+        <button class="rate-link" id="rate-again" type="button">Изменить оценку</button>
+      </div>
+    </div>
   </section>
 
   <!-- 03 -->
@@ -1128,9 +1265,9 @@
       </div>
       <div class="thanks">
         <h2>Приятного хоррор-вечера 🎃</h2>
-        <p>Оставьте отзыв на GGSEL — для небольшого магазина это очень много значит. Откройте заказ <b data-f="order"></b> в «Моих покупках», поле отзыва — внизу страницы заказа.</p>
+        <p>Если всё понравилось — оцените нас: отзыв на GGSEL очень помогает небольшому магазину и занимает 30 секунд.</p>
         <div class="btns">
-          <a class="btn pri" data-link="review" href="#" target="_blank" rel="noopener">Оставить отзыв</a>
+          <a class="btn pri" id="thanks-rate" href="#rate">Оценить PLUSHUB</a>
           <a class="btn" data-link="chat" href="#" target="_blank" rel="noopener">Открыть чат заказа</a>
         </div>
         <div class="bonus">Приведите друга — вернём вам <b>5%</b> от его покупки</div>
@@ -1238,6 +1375,14 @@
   <span>Страница доступна только по вашей ссылке. Не пересылайте её.</span>
 </footer>
 
+<!-- Плашка «Оцените нас» при повторном заходе (20.10.2026); закрыли — не показываем 3 дня -->
+<div class="rsheet" id="rsheet" data-v="ask" hidden>
+  <button class="rsheet-x" id="rsheet-x" type="button" aria-label="Скрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <b id="rsheet-t">Снова здесь — значит, всё работает?</b>
+  <span id="rsheet-s">Оцените PLUSHUB — это пара секунд</span>
+  <div class="stars" data-stars></div>
+  <a class="btn pri" id="rsheet-go" href="#rate">Оставить отзыв</a>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite">Скопировано</div>
 <!-- пасхалки: тыква в углу (3 клика) и призрак, который появляется, если долго не двигать мышью -->
 <button class="peek" id="peek" type="button" aria-label="Тыква"><span class="lid"></span></button>
@@ -1441,6 +1586,17 @@ const store = {
 const plural = (n, a, b, c) => (n % 10 === 1 && n % 100 !== 11) ? a : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? b : c;
 const fmtDate = t => new Date(t).toLocaleDateString("ru-RU");
 $$("[data-link]").forEach(a => a.href = LINKS[a.dataset.link]);
+
+/* ---------- новость про канал: полоса над шапкой; скрыли или перешли в канал — не показываем 7 дней ---------- */
+(function news() {
+  const K = "plushub:news-channel", el = $("#news");
+  let t = 0; try { t = +localStorage.getItem(K) || 0; } catch {}
+  if (Date.now() - t < 7 * DAY) return;
+  el.hidden = false; document.body.classList.add("has-news");
+  const hide = () => { el.hidden = true; document.body.classList.remove("has-news"); try { localStorage.setItem(K, Date.now()); } catch {} };
+  $("#news-x").onclick = hide;
+  $("#news-go").addEventListener("click", () => setTimeout(hide, 400));
+})();
 
 /* ---------- загрузка заказа ---------- */
 const loader = $("#loader");
@@ -3108,9 +3264,9 @@ if (store.get().ok) $("#final").classList.add("ok");
 /* ---------- «Всё получилось?» ----------
    Ответ уходит в скрипт → уведомление вам в Telegram и пометка в «Выдачах».
    «Да» — благодарность и кнопка отзыва; «Нужна помощь» — сразу в Telegram-поддержку. */
-function sendFeedback(answer) {
+function sendFeedback(answer, extra = "") {
   if (!API_URL || !uniqueCode || params.has("demo") || params.has("test")) return;   // демо и тест — без уведомлений
-  fetch(API_URL + "?action=feedback&answer=" + answer + "&uniquecode=" + encodeURIComponent(uniqueCode), { keepalive: true }).catch(() => {});
+  fetch(API_URL + "?action=feedback&answer=" + answer + extra + "&uniquecode=" + encodeURIComponent(uniqueCode), { keepalive: true }).catch(() => {});
 }
 function saidYes() {
   sendFeedback("ok");
@@ -3124,6 +3280,80 @@ function needHelp() {
 // «Да, всё работает» → благодарность и кнопка отзыва; «Нужна помощь» — ссылка сама открывает Telegram-поддержку
 $("#yes").onclick = saidYes;
 $("#need-help").addEventListener("click", needHelp);
+
+/* ---------- оценка и отзыв (20.10.2026) ----------
+   Звёзды на сайте: 4–5 → подсказка и готовый текст для GGSEL (кнопка копирует текст и открывает «Мои покупки»);
+   1–3 → сначала поддержка, кнопка отзыва остаётся. Оценка уходит в скрипт: уведомление вам и пометка в «Выдачах».
+   При повторном заходе снизу выезжает плашка; закрыли — 3 дня не показываем. Проверка: ?demo&rsheet — плашка сразу. */
+const TPL = [
+  ["Коротко", "Всё пришло моментально, данные рабочие. Спасибо!"],
+  ["Про скорость", "Оплатил — через минуту получил ХАБ и понятную инструкцию. Всё работает, рекомендую."],
+  ["Подробно", "Отличный магазин: выдача автоматическая, инструкция по шагам, играю со своего профиля. Поддержка на связи. Буду брать ещё."]
+];
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17.1l-5.6 2.9 1.1-6.2L2.9 9.4l6.3-.9z"/></svg>';
+const rateCard = $("#rate"), sheet = $("#rsheet"), tpl = $("#tpl"), tplTabs = $("#tpl-tabs");
+const rateState = () => { const s = store.get(); return s.reviewGo ? "done" : s.rate >= 4 ? "good" : s.rate ? "bad" : "ask"; };
+const paintStars = n => $$("[data-stars] .star").forEach(b => b.classList.toggle("on", +b.dataset.v <= n));
+const rateRender = () => { rateCard.dataset.s = rateState(); paintStars(store.get().rate || 0); };
+function toRate() {
+  rateCard.scrollIntoView({ behavior: "smooth", block: "center" });
+  rateCard.classList.remove("flash"); void rateCard.offsetWidth; rateCard.classList.add("flash");
+}
+function hideSheet(remember) {
+  if (remember) store.set({ rateDismiss: Date.now() });
+  sheet.classList.remove("on"); setTimeout(() => { sheet.hidden = true; }, 650);
+}
+function setRate(v, box) {
+  store.set({ rate: v, reviewGo: 0 });
+  sendFeedback("rate", "&stars=" + v);
+  rateRender();
+  $$(".star", box).forEach((b, i) => { b.classList.remove("pop"); if (+b.dataset.v <= v) { void b.offsetWidth; b.style.animationDelay = i * 45 + "ms"; b.classList.add("pop"); } });
+  if (box.closest("#rsheet")) { hideSheet(false); setTimeout(toRate, 300); }
+}
+$$("[data-stars]").forEach(box => {
+  box.setAttribute("role", "radiogroup"); box.setAttribute("aria-label", "Оценка от 1 до 5");
+  box.innerHTML = [1, 2, 3, 4, 5].map(v => `<button class="star" type="button" data-v="${v}" role="radio" aria-label="${v} из 5">${STAR}</button>`).join("");
+  box.addEventListener("pointerover", e => { const b = e.target.closest(".star"); if (b) $$(".star", box).forEach(x => x.classList.toggle("on", +x.dataset.v <= +b.dataset.v)); });
+  box.addEventListener("pointerleave", () => paintStars(store.get().rate || 0));
+  box.addEventListener("click", e => { const b = e.target.closest(".star"); if (b) setRate(+b.dataset.v, box); });
+});
+tplTabs.innerHTML = TPL.map(([n], i) => `<button type="button" data-i="${i}">${n}</button>`).join("");
+const pickTpl = i => { tpl.value = TPL[i][1]; $$("button", tplTabs).forEach(b => b.classList.toggle("on", +b.dataset.i === i)); };
+tplTabs.onclick = e => { const b = e.target.closest("button"); if (b) pickTpl(+b.dataset.i); };
+tpl.addEventListener("input", () => $$("button", tplTabs).forEach(b => b.classList.remove("on")));
+pickTpl(1);
+function wentToReview() {
+  store.set({ reviewGo: Date.now() });
+  sendFeedback("review");
+  setTimeout(rateRender, 1200);
+  if (!sheet.hidden) hideSheet(false);
+}
+$("#rate-go").addEventListener("click", async () => {
+  const ok = await copy(tpl.value.trim());
+  toast(ok ? "Текст скопирован — вставьте его в отзыв" : "Скопируйте текст вручную", 2600);
+  wentToReview();
+});
+$("#rate-anyway").addEventListener("click", wentToReview);
+$("#rate-help").addEventListener("click", () => { sendFeedback("help"); store.set({ rateDismiss: Date.now() }); });
+$("#rate-again").onclick = () => { store.set({ rate: 0, reviewGo: 0 }); rateRender(); };
+$("#thanks-rate").onclick = e => { e.preventDefault(); rateRender(); toRate(); };
+$("#rsheet-x").onclick = () => hideSheet(true);
+$("#rsheet-go").onclick = e => { e.preventDefault(); hideSheet(false); setTimeout(toRate, 300); };
+rateRender();
+// повторный заход: считаем один раз за вкладку (перезагрузка после замены ХАБа — не новый заход)
+(function sheetOnReturn() {
+  const ss = "plushub:visit:" + ORDER.id;
+  let fresh = false; try { if (!sessionStorage.getItem(ss)) { sessionStorage.setItem(ss, "1"); fresh = true; } } catch {}
+  if (fresh) store.set({ visits: (store.get().visits || 0) + 1 });
+  const s = store.get(), st = rateState(), force = params.has("rsheet");
+  if (!force && ((s.visits || 0) < 2 || st === "done" || st === "bad" || Date.now() - (s.rateDismiss || 0) < 3 * DAY || document.body.classList.contains("gated"))) return;
+  sheet.dataset.v = st === "good" ? "go" : "ask";
+  if (st === "good") { $("#rsheet-t").textContent = "Осталось оставить отзыв на GGSEL"; $("#rsheet-s").textContent = "Текст уже готов — скопируете одной кнопкой"; }
+  setTimeout(() => {
+    if (rateState() === "done") return;
+    sheet.hidden = false; requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add("on")));
+  }, force ? 800 : 5000);
+})();
 
 /* ---------- свечение карточек за курсором ---------- */
 function glow() {
