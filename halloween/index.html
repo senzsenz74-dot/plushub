@@ -1415,7 +1415,7 @@ const LINKS = {
 const DAY = 864e5;
 /* ХЭЛЛОУИН: даты акции. Основной index.html в эти дни сам переводит покупателей сюда
    (там такие же даты — меняйте в обоих местах). Конец — последний день акции включительно. */
-const HALLOWEEN = { start: "2026-10-24", end: "2026-11-02" };
+const HALLOWEEN = { start: "2026-10-20", end: "2026-11-02" };
 document.querySelectorAll('[data-hw="end"]').forEach(el =>
   el.textContent = new Date(HALLOWEEN.end + "T00:00:00").toLocaleDateString("ru-RU", { day: "numeric", month: "long" }));
 const DEMO = {
