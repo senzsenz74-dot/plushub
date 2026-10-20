@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150">
+  <defs>
+    <radialGradient id="gbody" cx=".38" cy=".28" r=".9">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#eef0ff"/><stop offset=".8" stop-color="#c9c7ee"/><stop offset="1" stop-color="#9f9bd6"/>
+    </radialGradient>
+    <linearGradient id="gfade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff"/><stop offset=".62" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".25"/>
+    </linearGradient>
+    <mask id="gmask" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="150"><rect width="120" height="150" fill="url(#gfade)"/></mask>
+    <linearGradient id="gshade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6f68b8" stop-opacity=".35"/><stop offset=".3" stop-color="#6f68b8" stop-opacity="0"/><stop offset=".75" stop-color="#6f68b8" stop-opacity="0"/><stop offset="1" stop-color="#6f68b8" stop-opacity=".45"/>
+    </linearGradient>
+    <radialGradient id="geye" cx=".4" cy=".35" r=".7">
+      <stop offset="0" stop-color="#3b2a5a"/><stop offset="1" stop-color="#120a1c"/>
+    </radialGradient>
+    <radialGradient id="gmouth" cx=".5" cy=".65" r=".7">
+      <stop offset="0" stop-color="#5a1e3a"/><stop offset="1" stop-color="#140a1c"/>
+    </radialGradient>
+    <filter id="gblur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="gsoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <path id="gb" d="M60 8C31 8 17 31 17 60V110C17 118 22 126 28 122C34 118 36 132 44 130C52 128 52 116 60 118C68 120 69 132 77 130C85 128 86 118 92 122C98 126 103 118 103 110V60C103 31 89 8 60 8Z"></path>
+  </defs>
+  <use href="#gb" fill="#cfc8ff" opacity=".55" filter="url(#gblur)"/>
+  <g mask="url(#gmask)">
+    <path class="ga gal" d="M21 70C10 70 4 62 7 55C11 61 16 62 22 60Z" fill="url(#gbody)"/>
+    <path class="ga gar" d="M99 70C110 70 116 62 113 55C109 61 104 62 98 60Z" fill="url(#gbody)"/>
+    <use href="#gb" fill="url(#gbody)"/>
+    <use href="#gb" fill="url(#gshade)"/>
+    <use href="#gb" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.2"/>
+  </g>
+  <ellipse cx="44" cy="30" rx="10" ry="14" fill="#fff" opacity=".75" filter="url(#gsoft)" transform="rotate(-25 44 30)"/>
+  <ellipse cx="44" cy="62" rx="10" ry="12" fill="#8c86c8" opacity=".35" filter="url(#gsoft)"/>
+  <ellipse cx="76" cy="62" rx="10" ry="12" fill="#8c86c8" opacity=".35" filter="url(#gsoft)"/>
+  <g class="geyes">
+    <ellipse cx="44" cy="60" rx="7" ry="10" fill="url(#geye)"/>
+    <ellipse cx="76" cy="60" rx="7" ry="10" fill="url(#geye)"/>
+    <circle cx="41.5" cy="56" r="2.6" fill="#fff"/><circle cx="73.5" cy="56" r="2.6" fill="#fff"/>
+    <circle cx="46" cy="64" r="1.1" fill="#fff" opacity=".7"/><circle cx="78" cy="64" r="1.1" fill="#fff" opacity=".7"/>
+  </g>
+  <ellipse cx="34" cy="76" rx="6" ry="3.5" fill="#ff8fb0" opacity=".45" filter="url(#gsoft)"/>
+  <ellipse cx="86" cy="76" rx="6" ry="3.5" fill="#ff8fb0" opacity=".45" filter="url(#gsoft)"/>
+  <ellipse class="gmouth" cx="60" cy="82" rx="6.5" ry="8.5" fill="url(#gmouth)"/>
+  <ellipse cx="58" cy="78.5" rx="2.4" ry="1.4" fill="#fff" opacity=".35"/>
+</svg>
